@@ -1,0 +1,14 @@
+
+## Interface: 110207
+## Title: |cffff5900cu|cffffb300re|cfff0ff00多功能插件
+## Notes: 神秘插件.
+## Version: 2025.07.27
+## Author: liantian-cn
+## IconAtlas: questlog-questtypeicon-weekly
+## SavedVariables: cureSave
+
+
+cure.lua
+
+cureSpell.lua
+cureAura.lua
