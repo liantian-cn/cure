@@ -29,7 +29,7 @@ end
 -- @return number 法术ID，如果法术不存在或不是玩家技能则返回0
 local getPlayerSpellId = function(spellIdentifier)
     local spellId = getSpellId(spellIdentifier)
-    if not IsSpellKnownOrOverridesKnown(spellId) then
+    if not C_SpellBook.IsSpellInSpellBook(spellId) then
         print("技能: " .. tostring(spellIdentifier) .. "不是玩家的技能")
         return 0
     end
@@ -40,7 +40,7 @@ end
 -- @param spellIdentifier 法术标识符(名称或ID)
 -- @param cooldownLimit 可选的冷却限制时间(毫秒)，默认使用SpellQueueWindow
 -- @return boolean 如果法术已冷却或即将冷却完成则返回true，否则返回false
-Cure.Spell.isSpellCoolDown = function(spellIdentifier, cooldownLimit)
+Cure.Spell.SpellCoolDown = function(spellIdentifier, cooldownLimit)
     local spellId = getPlayerSpellId(spellIdentifier)
     if spellId == 0 then
         return false
@@ -60,7 +60,7 @@ end
 -- 检查法术是否已冷却到GCD水平
 -- @param spellIdentifier 法术标识符(名称或ID)
 -- @return boolean 如果法术冷却时间不超过GCD则返回true，否则返回false
-Cure.Spell.isSpellCoolDownGCD = function(spellIdentifier)
+Cure.Spell.SpellCoolDownGCD = function(spellIdentifier)
     local spellId = getPlayerSpellId(spellIdentifier)
     if spellId == 0 then
         return false
@@ -158,7 +158,7 @@ end
 -- @param spellIdentifier 法术标识符(名称或ID)
 -- @param cooldownLimit 可选的冷却限制时间(毫秒)，默认使用SpellQueueWindow
 -- @return number 可用的充能次数
-Cure.Spell.getSpellCharges = function(spellIdentifier, cooldownLimit)
+Cure.Spell.SpellCharges = function(spellIdentifier, cooldownLimit)
     local spellId = getPlayerSpellId(spellIdentifier)
     if spellId == 0 then
         return 0
@@ -184,7 +184,7 @@ end
 -- @param spellIdentifier 法术标识符(名称或ID)
 -- @param targetUnit 目标单位
 -- @return boolean 如果法术在范围内则返回true，否则返回false
-Cure.Spell.isSpellInRange = function(spellIdentifier, targetUnit)
+Cure.Spell.SpellInRange = function(spellIdentifier, targetUnit)
     local spellId = getPlayerSpellId(spellIdentifier)
     if spellId == 0 then
         return false
@@ -193,4 +193,18 @@ Cure.Spell.isSpellInRange = function(spellIdentifier, targetUnit)
         return false
     end
     return C_Spell.IsSpellInRange(spellId, targetUnit) or false
+end
+
+
+-- 检查法术是否可用（包括是否有足够资源施放）
+-- @param spellIdentifier 法术标识符(名称或ID)
+-- @return boolean 如果法术可用或仅因资源不足而不可用则返回true，否则返回false
+-- 注意：此函数返回true表示法术本身是可用的，只是可能因为缺乏资源（如法力值）而无法施放
+Cure.Spell.SpellUsable = function(spellIdentifier)
+    local spellId = getPlayerSpellId(spellIdentifier)
+    if spellId == 0 then
+        return false
+    end
+    local isUsable, insufficientPower = C_Spell.IsSpellUsable(spellId)
+    return isUsable or insufficientPower
 end

@@ -1,6 +1,6 @@
 
 ## Interface: 110207
-## Title: |cffff5900cu|cffffb300re|cfff0ff00多功能插件
+## Title: |cffff5900cu|cffffb300re|cfff0ff00API
 ## Notes: 神秘插件.
 ## Version: 2025.07.27
 ## Author: liantian-cn
@@ -12,3 +12,9 @@ cure.lua
 
 cureSpell.lua
 cureAura.lua
+curePlate.lua
+cureStatus.lua
+
+
+# 例子文件
+example.lua

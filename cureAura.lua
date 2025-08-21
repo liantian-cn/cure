@@ -5,7 +5,7 @@ local SpellQueueWindow = tonumber(GetCVar("SpellQueueWindow"))
 -- 获取玩家增益效果(Buff)剩余时间
 -- @param spellIdentifier 法术标识符(名称或ID)
 -- @return number 增益效果剩余时间(秒)，如果不存在则返回0
-Cure.Aura.getPlayerBuffRemaining = function(spellIdentifier)
+Cure.Aura.playerBuffRemaining = function(spellIdentifier)
     local valueType = type(spellIdentifier)
     local aura
     if valueType == "string" then
@@ -24,7 +24,7 @@ end
 -- 获取玩家减益效果(DeBuff)剩余时间
 -- @param spellIdentifier 法术标识符(名称或ID)
 -- @return number 减益效果剩余时间(秒)，如果不存在则返回0
-Cure.Aura.getPlayerDeBuffRemaining = function(spellIdentifier)
+Cure.Aura.playerDeBuffRemaining = function(spellIdentifier)
     local valueType = type(spellIdentifier)
     local aura
     if valueType == "string" then
@@ -43,7 +43,7 @@ end
 -- 获取玩家增益效果(Buff)层数
 -- @param spellIdentifier 法术标识符(名称或ID)
 -- @return number 增益效果层数，如果不存在则返回0
-Cure.Aura.getPlayerBuffStacks = function(spellIdentifier)
+Cure.Aura.playerBuffStacks = function(spellIdentifier)
     local valueType = type(spellIdentifier)
     local aura
     if valueType == "string" then
@@ -61,7 +61,7 @@ end
 -- 获取玩家减益效果(DeBuff)层数
 -- @param spellIdentifier 法术标识符(名称或ID)
 -- @return number 减益效果层数，如果不存在则返回0
-Cure.Aura.getPlayerDeBuffStacks = function(spellIdentifier)
+Cure.Aura.playerDeBuffStacks = function(spellIdentifier)
     local valueType = type(spellIdentifier)
     local aura
     if valueType == "string" then
@@ -79,7 +79,7 @@ end
 -- 检查玩家是否拥有指定的增益效果(Buff)
 -- @param spellIdentifier 法术标识符(名称或ID)
 -- @return boolean 如果玩家拥有该增益效果则返回true，否则返回false
-Cure.Aura.isPlayerBuffExists = function(spellIdentifier)
+Cure.Aura.playerBuffExists = function(spellIdentifier)
     local valueType = type(spellIdentifier)
     local aura
     if valueType == "string" then
@@ -96,7 +96,7 @@ end
 -- 检查玩家是否拥有指定的减益效果(DeBuff)
 -- @param spellIdentifier 法术标识符(名称或ID)
 -- @return boolean 如果玩家拥有该减益效果则返回true，否则返回false
-Cure.Aura.isPlayerDeBuffExists = function(spellIdentifier)
+Cure.Aura.playerDeBuffExists = function(spellIdentifier)
     local valueType = type(spellIdentifier)
     local aura
     if valueType == "string" then
@@ -136,7 +136,7 @@ end
 -- @param targetUnit 目标单位，默认为"target"
 -- @param filter 减益效果过滤器，默认为"HARMFUL|PLAYER"
 -- @return number 减益效果剩余时间(秒)，如果不存在则返回0
-Cure.Aura.getTargetDebuffRemaining = function(spellIdentifier, targetUnit, filter)
+Cure.Aura.unitDebuffRemaining = function(spellIdentifier, targetUnit, filter)
     filter = filter or "HARMFUL|PLAYER"
     targetUnit = targetUnit or "target"
 
@@ -153,7 +153,7 @@ end
 -- @param targetUnit 目标单位，默认为"target"
 -- @param filter 减益效果过滤器，默认为"HARMFUL|PLAYER"
 -- @return boolean 如果目标拥有该减益效果则返回true，否则返回false
-Cure.Aura.isTargetDebuffExists = function(spellIdentifier, targetUnit, filter)
+Cure.Aura.unitDebuffExists = function(spellIdentifier, targetUnit, filter)
     filter = filter or "HARMFUL|PLAYER"
     targetUnit = targetUnit or "target"
     local auraInfo = getAuraInfo(targetUnit, spellIdentifier, filter)
@@ -162,3 +162,67 @@ Cure.Aura.isTargetDebuffExists = function(spellIdentifier, targetUnit, filter)
     end
     return false
 end
+
+
+-- 获取目标增益效果(Buff)剩余时间
+-- @param spellIdentifier 法术标识符(名称或ID)
+-- @param targetUnit 目标单位，默认为"target"
+-- @param filter 减益效果过滤器，默认为"HARMFUL|PLAYER"
+-- @return number 减益效果剩余时间(秒)，如果不存在则返回0
+Cure.Aura.unitBuffRemaining = function(spellIdentifier, targetUnit, filter)
+    filter = filter or "PLAYER|HELPFUL"
+    targetUnit = targetUnit or "target"
+
+    local auraInfo = getAuraInfo(targetUnit, spellIdentifier, filter)
+    if auraInfo then
+        local remaining = auraInfo.expirationTime - GetTime()
+        return math.max(remaining, 0)
+    end
+    return 0
+end
+
+
+
+-- 检查目标是否拥有指定的减益效果(Buff)
+-- @param spellIdentifier 法术标识符(名称或ID)
+-- @param targetUnit 目标单位，默认为"target"
+-- @param filter 减益效果过滤器，默认为"HELPFUL|PLAYER"
+-- @return boolean 如果目标拥有该减益效果则返回true，否则返回false
+Cure.Aura.unitBuffExists = function(spellIdentifier, targetUnit, filter)
+    filter = filter or "HELPFUL|PLAYER"
+    targetUnit = targetUnit or "target"
+    local auraInfo = getAuraInfo(targetUnit, spellIdentifier, filter)
+    if auraInfo then
+        return true
+    end
+    return false
+end
+
+
+-- 统计指定单位身上中高伤害减益效果的数量
+-- @param unitName 目标单位名称
+-- @return number, number 返回两个值：中等伤害减益效果数量, 高伤害减益效果数量
+-- 该函数会遍历目标身上的所有减益效果，并根据预定义的减益效果列表进行分类统计
+-- 如果在列表中通过名称匹配到减益效果，会打印提示信息用于调试
+Cure.Aura.countUnitDamageDebuffs = function(unitName)
+    local unitMidDamageDebuffCount, unitHighDamageDebuffCount = 0, 0;
+    for i = 1, 40 do
+        local debuffData = C_UnitAuras.GetAuraDataByIndex(unitName, i, "HARMFUL")
+        if not debuffData then
+            break
+        end
+        if Cure.Aura.HighDamageDebuffList[debuffData.spellId] then
+            unitHighDamageDebuffCount = unitHighDamageDebuffCount + 1;
+        elseif Cure.Aura.MidDamageDebuffList[debuffData.spellId] then
+            unitMidDamageDebuffCount = unitMidDamageDebuffCount + 1;
+        elseif Cure.Aura.HighDamageDebuffList[debuffData.name] then
+            unitHighDamageDebuffCount = unitHighDamageDebuffCount + 1;
+            print("根据名称判断的debuff匹配到了[" .. debuffData.name .. "],技能ID是:" .. tostring(debuffData.spellId));
+        elseif Cure.Aura.MidDamageDebuffList[debuffData.name] then
+            unitMidDamageDebuffCount = unitMidDamageDebuffCount + 1;
+            print("根据名称判断的debuff匹配到了[" .. debuffData.name .. "],技能ID是:" .. tostring(debuffData.spellId));
+        end
+    end
+    return unitMidDamageDebuffCount, unitHighDamageDebuffCount
+end
+
