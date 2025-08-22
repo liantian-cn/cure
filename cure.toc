@@ -7,9 +7,11 @@
 ## IconAtlas: questlog-questtypeicon-weekly
 ## SavedVariables: cureSave
 
+# LibStub
+Libs\LibStub\LibStub.lua
+Libs\LibRangeCheck-3.0\LibRangeCheck-3.0.lua
 
 cure.lua
-
 cureSpell.lua
 cureAura.lua
 curePlate.lua
