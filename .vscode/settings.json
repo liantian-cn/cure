@@ -13,5 +13,8 @@
     },
     "Lua.workspace.library": [
         "c:\\Users\\liant\\.lingmaIDE\\extensions\\ketho.wow-api-0.21.0\\Annotations\\Core"
+    ],
+    "Lua.diagnostics.disable": [
+        "assign-type-mismatch"
     ]
 }

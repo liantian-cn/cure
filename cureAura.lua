@@ -225,4 +225,3 @@ Cure.Aura.countUnitDamageDebuffs = function(unitName)
     end
     return unitMidDamageDebuffCount, unitHighDamageDebuffCount
 end
-
