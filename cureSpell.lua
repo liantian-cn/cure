@@ -71,7 +71,8 @@ Cure.Spell.SpellCoolDownGCD = function(spellIdentifier)
     if spellCooldownInfo.duration == 0 then
         return true
     else
-        return spellCooldownInfo.startTime + spellCooldownInfo.duration <= gcdCooldownInfo.startTime + gcdCooldownInfo.duration
+        return spellCooldownInfo.startTime + spellCooldownInfo.duration <= gcdCooldownInfo.startTime +
+            gcdCooldownInfo.duration
     end
 end
 
@@ -194,7 +195,6 @@ Cure.Spell.SpellInRange = function(spellIdentifier, targetUnit)
     end
     return C_Spell.IsSpellInRange(spellId, targetUnit) or false
 end
-
 
 -- 检查法术是否可用（包括是否有足够资源施放）
 -- @param spellIdentifier 法术标识符(名称或ID)

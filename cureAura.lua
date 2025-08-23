@@ -1,7 +1,6 @@
 -- 获取游戏客户端设置的法术队列窗口时间
 local SpellQueueWindow = tonumber(GetCVar("SpellQueueWindow"))
 
-
 -- 获取玩家增益效果(Buff)剩余时间
 -- @param spellIdentifier 法术标识符(名称或ID)
 -- @return number 增益效果剩余时间(秒)，如果不存在则返回0
@@ -110,8 +109,6 @@ Cure.Aura.playerDeBuffExists = function(spellIdentifier)
     return false
 end
 
-
-
 -- 获取指定单位的光环信息
 -- @param targetUnit 目标单位
 -- @param spellIdentifier 法术标识符(名称或ID)
@@ -163,7 +160,6 @@ Cure.Aura.unitDebuffExists = function(spellIdentifier, targetUnit, filter)
     return false
 end
 
-
 -- 获取目标增益效果(Buff)剩余时间
 -- @param spellIdentifier 法术标识符(名称或ID)
 -- @param targetUnit 目标单位，默认为"target"
@@ -181,8 +177,6 @@ Cure.Aura.unitBuffRemaining = function(spellIdentifier, targetUnit, filter)
     return 0
 end
 
-
-
 -- 检查目标是否拥有指定的减益效果(Buff)
 -- @param spellIdentifier 法术标识符(名称或ID)
 -- @param targetUnit 目标单位，默认为"target"
@@ -197,7 +191,6 @@ Cure.Aura.unitBuffExists = function(spellIdentifier, targetUnit, filter)
     end
     return false
 end
-
 
 -- 统计指定单位身上中高伤害减益效果的数量
 -- @param unitName 目标单位名称
@@ -217,10 +210,12 @@ Cure.Aura.countUnitDamageDebuffs = function(unitName)
             unitMidDamageDebuffCount = unitMidDamageDebuffCount + 1;
         elseif Cure.Aura.HighDamageDebuffList[debuffData.name] then
             unitHighDamageDebuffCount = unitHighDamageDebuffCount + 1;
-            print("根据名称判断的debuff匹配到了[" .. debuffData.name .. "],技能ID是:" .. tostring(debuffData.spellId));
+            print("根据名称判断的debuff匹配到了[" .. debuffData.name .. "],技能ID是:" ..
+                tostring(debuffData.spellId));
         elseif Cure.Aura.MidDamageDebuffList[debuffData.name] then
             unitMidDamageDebuffCount = unitMidDamageDebuffCount + 1;
-            print("根据名称判断的debuff匹配到了[" .. debuffData.name .. "],技能ID是:" .. tostring(debuffData.spellId));
+            print("根据名称判断的debuff匹配到了[" .. debuffData.name .. "],技能ID是:" ..
+                tostring(debuffData.spellId));
         end
     end
     return unitMidDamageDebuffCount, unitHighDamageDebuffCount

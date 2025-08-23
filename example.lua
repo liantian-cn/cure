@@ -25,3 +25,13 @@ local inCombatForLessThan = Cure.Status.inCombatForLessThan;     -- 检查战斗
 local inCombatForMoreThan = Cure.Status.inCombatForMoreThan;     -- 检查战斗持续时间是否超过指定时间
 
 local enemyCountInRange = Cure.Plate.enemyCountInRange;          -- 获取范围内符合条件的敌对目标数量
+local targetInMelee = Cure.Plate.targetInMelee;                  -- 检查当前目标是否在近战范围内
+local anyEnemyInMelee = Cure.Plate.anyEnemyInMelee;              -- 检查近战范围内是否有任意敌对目标
+local anyEnemyIsCasting = Cure.Plate.anyEnemyIsCasting;          -- 检查是否有敌对目标正在施放指定的法术
+
+local playerIsCasting = Cure.Status.playerIsCasting;             -- 检查玩家是否正在施法
+local getCombatTime = Cure.Status.getCombatTime;                 -- 获取战斗持续时间
+local inCombatForLessThan = Cure.Status.inCombatForLessThan;     -- 检查战斗持续时间是否少于指定时间
+local inCombatForMoreThan = Cure.Status.inCombatForMoreThan;     -- 检查战斗持续时间是否超过指定时间
+
+local slotUsable = Cure.Item.slotUsable;                         -- 检查指定装备槽位的物品是否可以使用

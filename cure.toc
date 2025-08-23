@@ -16,7 +16,10 @@ cureSpell.lua
 cureAura.lua
 curePlate.lua
 cureStatus.lua
+cureItem.lua
 
+
+class\DEMONHUNTER.lua
 
 # 例子文件
 example.lua
