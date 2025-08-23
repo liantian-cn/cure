@@ -3,9 +3,9 @@ local SpellQueueWindow = tonumber(GetCVar("SpellQueueWindow"))
 local LibRangeCheck = LibStub:GetLibrary("LibRangeCheck-3.0", true)
 
 -- 获取范围内符合条件的敌对目标数量
--- @param mobRange 检查范围，默认10码
--- @param mobHealth 目标最低生命值要求，默认0
--- @return number 返回在指定范围内且生命值高于指定值的敌对目标数量
+--- @param mobRange number 检查范围，默认10码
+--- @param mobHealth number 目标最低生命值要求，默认0
+--- @return number 返回在指定范围内且生命值高于指定值的敌对目标数量
 Cure.Plate.enemyCountInRange = function(mobRange, mobHealth)
     mobRange = mobRange or 10
     mobHealth = mobHealth or 0
@@ -23,7 +23,7 @@ Cure.Plate.enemyCountInRange = function(mobRange, mobHealth)
 end
 
 -- 检查当前目标是否在近战范围内
--- @return boolean 如果当前目标在近战范围内且可攻击则返回true，否则返回nil
+--- @return boolean 如果当前目标在近战范围内且可攻击则返回true，否则返回nil
 Cure.Plate.targetInMelee = function()
     local targetInRange = C_Spell.IsSpellInRange(873, "target") or false
     if UnitCanAttack("player", "target") and targetInRange and (not UnitIsDeadOrGhost("target")) then
@@ -32,7 +32,7 @@ Cure.Plate.targetInMelee = function()
 end
 
 -- 检查近战范围内是否有任意敌对目标
--- @return boolean 如果近战范围内有任意可攻击的敌对目标则返回true，否则返回false
+--- @return boolean 如果近战范围内有任意可攻击的敌对目标则返回true，否则返回false
 Cure.Plate.anyEnemyInMelee = function()
     local unitID, unitInRange = nil, false
     for _, plate in pairs(C_NamePlate.GetNamePlates()) do
@@ -46,8 +46,8 @@ Cure.Plate.anyEnemyInMelee = function()
 end
 
 -- 检查是否有敌对目标正在施放指定的法术
--- @param spell_list 法术列表，可以是法术ID或法术名称作为键的表
--- @return boolean 如果有任何敌对目标正在施放spell_list中的法术则返回true，否则返回false
+--- @param spell_list 法术列表，可以是法术ID或法术名称作为键的表
+--- @return boolean 如果有任何敌对目标正在施放spell_list中的法术则返回true，否则返回false
 Cure.Plate.anyEnemyIsCasting = function(spell_list)
     local unitID = nil
     for _, plate in pairs(C_NamePlate.GetNamePlates()) do

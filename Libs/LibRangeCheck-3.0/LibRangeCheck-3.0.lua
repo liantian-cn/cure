@@ -1026,7 +1026,7 @@ end
 
 -- returns the range estimate as a string
 -- deprecated, use :getRange(unit) instead and build your own strings
--- @param checkVisible if set to true, then a UnitIsVisible check is made, and **nil** is returned if the unit is not visible
+--- @param checkVisible if set to true, then a UnitIsVisible check is made, and **nil** is returned if the unit is not visible
 function lib:getRangeAsString(unit, checkVisible, showOutOfRange)
   local minRange, maxRange = self:getRange(unit, checkVisible)
   if not minRange then
@@ -1077,114 +1077,114 @@ function lib:init(forced)
 end
 
 --- Return an iterator for checkers usable on friendly units as (**range**, **checker**) pairs.
--- @param inCombat if true, only checkers that can be used in combat ar returned
+--- @param inCombat if true, only checkers that can be used in combat ar returned
 function lib:GetFriendCheckers(inCombat)
   return rcIterator(inCombat and self.friendRCInCombat or self.friendRC)
 end
 
 --- Return an iterator for checkers usable on friendly units as (**range**, **checker**) pairs.
--- @param inCombat if true, only checkers that can be used in combat ar returned
+--- @param inCombat if true, only checkers that can be used in combat ar returned
 function lib:GetFriendCheckersNoItems(inCombat)
   return rcIterator(inCombat and self.friendNoItemsRCInCombat or self.friendNoItemsRC)
 end
 
 
 --- Return an iterator for checkers usable on enemy units as (**range**, **checker**) pairs.
--- @param inCombat if true, only checkers that can be used in combat ar returned
+--- @param inCombat if true, only checkers that can be used in combat ar returned
 function lib:GetHarmCheckers(inCombat)
   return rcIterator(inCombat and self.harmRCInCombat or self.harmRC)
 end
 
 
 --- Return an iterator for checkers usable on enemy units as (**range**, **checker**) pairs.
--- @param inCombat if true, only checkers that can be used in combat ar returned
+--- @param inCombat if true, only checkers that can be used in combat ar returned
 function lib:GetHarmCheckersNoItems(inCombat)
   return rcIterator(inCombat and self.harmNoItemsRCInCombat or self.harmNoItemsRC)
 end
 
 
 --- Return an iterator for checkers usable on miscellaneous units as (**range**, **checker**) pairs.  These units are neither enemy nor friendly, such as people in sanctuaries or corpses.
--- @param inCombat if true, only checkers that can be used in combat ar returned
+--- @param inCombat if true, only checkers that can be used in combat ar returned
 function lib:GetMiscCheckers(inCombat)
   return rcIterator(inCombat and self.miscRCInCombat or self.miscRC)
 end
 
 --- Return a checker suitable for out-of-range checking on friendly units, that is, a checker whose range is equal or larger than the requested range.
--- @param range the range to check for.
--- @param inCombat if true, only checkers that can be used in combat ar returned
--- @return **checker**, **range** pair or **nil** if no suitable checker is available. **range** is the actual range the returned **checker** checks for.
+--- @param range the range to check for.
+--- @param inCombat if true, only checkers that can be used in combat ar returned
+--- @return **checker**, **range** pair or **nil** if no suitable checker is available. **range** is the actual range the returned **checker** checks for.
 function lib:GetFriendMinChecker(range, inCombat)
   return getMinChecker(inCombat and self.friendRCInCombat or self.friendRC , range)
 end
 
 --- Return a checker suitable for out-of-range checking on enemy units, that is, a checker whose range is equal or larger than the requested range.
--- @param range the range to check for.
--- @param inCombat if true, only checkers that can be used in combat ar returned
--- @return **checker**, **range** pair or **nil** if no suitable checker is available. **range** is the actual range the returned **checker** checks for.
+--- @param range the range to check for.
+--- @param inCombat if true, only checkers that can be used in combat ar returned
+--- @return **checker**, **range** pair or **nil** if no suitable checker is available. **range** is the actual range the returned **checker** checks for.
 function lib:GetHarmMinChecker(range, inCombat)
   return getMinChecker(inCombat and self.harmRCInCombat or self.harmRC, range)
 end
 
 --- Return a checker suitable for out-of-range checking on miscellaneous units, that is, a checker whose range is equal or larger than the requested range.
--- @param range the range to check for.
--- @param inCombat if true, only checkers that can be used in combat ar returned
--- @return **checker**, **range** pair or **nil** if no suitable checker is available. **range** is the actual range the returned **checker** checks for.
+--- @param range the range to check for.
+--- @param inCombat if true, only checkers that can be used in combat ar returned
+--- @return **checker**, **range** pair or **nil** if no suitable checker is available. **range** is the actual range the returned **checker** checks for.
 function lib:GetMiscMinChecker(range, inCombat)
   return getMinChecker(inCombat and self.miscRCInCombat or self.miscRC, range)
 end
 
 --- Return a checker suitable for in-range checking on friendly units, that is, a checker whose range is equal or smaller than the requested range.
--- @param range the range to check for.
--- @param inCombat if true, only checkers that can be used in combat ar returned
--- @return **checker**, **range** pair or **nil** if no suitable checker is available. **range** is the actual range the returned **checker** checks for.
+--- @param range the range to check for.
+--- @param inCombat if true, only checkers that can be used in combat ar returned
+--- @return **checker**, **range** pair or **nil** if no suitable checker is available. **range** is the actual range the returned **checker** checks for.
 function lib:GetFriendMaxChecker(range, inCombat)
   return getMaxChecker(inCombat and self.friendRCInCombat or self.friendRC, range)
 end
 
 --- Return a checker suitable for in-range checking on enemy units, that is, a checker whose range is equal or smaller than the requested range.
--- @param range the range to check for.
--- @param inCombat if true, only checkers that can be used in combat ar returned
--- @return **checker**, **range** pair or **nil** if no suitable checker is available. **range** is the actual range the returned **checker** checks for.
+--- @param range the range to check for.
+--- @param inCombat if true, only checkers that can be used in combat ar returned
+--- @return **checker**, **range** pair or **nil** if no suitable checker is available. **range** is the actual range the returned **checker** checks for.
 function lib:GetHarmMaxChecker(range, inCombat)
   return getMaxChecker(inCombat and self.harmRCInCombat or self.harmRC, range)
 end
 
 --- Return a checker suitable for in-range checking on miscellaneous units, that is, a checker whose range is equal or smaller than the requested range.
--- @param range the range to check for.
--- @param inCombat if true, only checkers that can be used in combat ar returned
--- @return **checker**, **range** pair or **nil** if no suitable checker is available. **range** is the actual range the returned **checker** checks for.
+--- @param range the range to check for.
+--- @param inCombat if true, only checkers that can be used in combat ar returned
+--- @return **checker**, **range** pair or **nil** if no suitable checker is available. **range** is the actual range the returned **checker** checks for.
 function lib:GetMiscMaxChecker(range, inCombat)
   return getMaxChecker(inCombat and self.miscRCInCombat and self.miscRC, range)
 end
 
 --- Return a checker for the given range for friendly units.
--- @param range the range to check for.
--- @param inCombat if true, only checkers that can be used in combat ar returned
--- @return **checker** function or **nil** if no suitable checker is available.
+--- @param range the range to check for.
+--- @param inCombat if true, only checkers that can be used in combat ar returned
+--- @return **checker** function or **nil** if no suitable checker is available.
 function lib:GetFriendChecker(range, inCombat)
   return getChecker(inCombat and self.friendRCInCombat or self.friendRC, range)
 end
 
 --- Return a checker for the given range for enemy units.
--- @param range the range to check for.
--- @param inCombat if true, only checkers that can be used in combat ar returned
--- @return **checker** function or **nil** if no suitable checker is available.
+--- @param range the range to check for.
+--- @param inCombat if true, only checkers that can be used in combat ar returned
+--- @return **checker** function or **nil** if no suitable checker is available.
 function lib:GetHarmChecker(range, inCombat)
   return getChecker(inCombat and self.harmRCInCombat or self.harmRC, range)
 end
 
 --- Return a checker for the given range for miscellaneous units.
--- @param range the range to check for.
--- @param inCombat if true, only checkers that can be used in combat ar returned
--- @return **checker** function or **nil** if no suitable checker is available.
+--- @param range the range to check for.
+--- @param inCombat if true, only checkers that can be used in combat ar returned
+--- @return **checker** function or **nil** if no suitable checker is available.
 function lib:GetMiscChecker(range, inCombat)
   return getChecker(inCombat and self.miscRCInCombat or self.miscRC, range)
 end
 
 --- Return a checker suitable for out-of-range checking that checks the unit type and calls the appropriate checker (friend/harm/misc).
--- @param range the range to check for.
--- @param inCombat if true, only checkers that can be used in combat ar returned
--- @return **checker** function.
+--- @param range the range to check for.
+--- @param inCombat if true, only checkers that can be used in combat ar returned
+--- @return **checker** function.
 function lib:GetSmartMinChecker(range, inCombat)
   if inCombat then
     return createSmartChecker(getMinChecker(self.friendRCInCombat, range),
@@ -1198,9 +1198,9 @@ function lib:GetSmartMinChecker(range, inCombat)
 end
 
 --- Return a checker suitable for in-range checking that checks the unit type and calls the appropriate checker (friend/harm/misc).
--- @param range the range to check for.
--- @param inCombat if true, only checkers that can be used in combat ar returned
--- @return **checker** function.
+--- @param range the range to check for.
+--- @param inCombat if true, only checkers that can be used in combat ar returned
+--- @return **checker** function.
 function lib:GetSmartMaxChecker(range, inCombat)
   if inCombat then
     return createSmartChecker(getMaxChecker(self.friendRCInCombat, range),
@@ -1214,10 +1214,10 @@ function lib:GetSmartMaxChecker(range, inCombat)
 end
 
 --- Return a checker for the given range that checks the unit type and calls the appropriate checker (friend/harm/misc).
--- @param range the range to check for.
--- @param fallback optional fallback function that gets called as fallback(unit) if a checker is not available for the given type (friend/harm/misc) at the requested range. The default fallback function return nil.
--- @param inCombat if true, only checkers that can be used in combat ar returned
--- @return **checker** function.
+--- @param range the range to check for.
+--- @param fallback optional fallback function that gets called as fallback(unit) if a checker is not available for the given type (friend/harm/misc) at the requested range. The default fallback function return nil.
+--- @param inCombat if true, only checkers that can be used in combat ar returned
+--- @return **checker** function.
 function lib:GetSmartChecker(range, fallback, inCombat)
   if inCombat then
     return createSmartChecker(getChecker(self.friendRCInCombat, range) or fallback,
@@ -1231,11 +1231,11 @@ function lib:GetSmartChecker(range, fallback, inCombat)
 end
 
 --- Get a range estimate as **minRange**, **maxRange**.
--- @param unit the target unit to check range to.
--- @param checkVisible if set to true, then a UnitIsVisible check is made, and **nil** is returned if the unit is not visible
--- @param noItems if set to true, no items and only spells are being used for the range check
--- @param maxCacheAge the timespan a cached range value is considered valid (default 0.1 seconds, maximum 1 second)
--- @return **minRange**, **maxRange** pair if a range estimate could be determined, **nil** otherwise. **maxRange** is **nil** if **unit** is further away than the highest possible range we can check.
+--- @param unit the target unit to check range to.
+--- @param checkVisible if set to true, then a UnitIsVisible check is made, and **nil** is returned if the unit is not visible
+--- @param noItems if set to true, no items and only spells are being used for the range check
+--- @param maxCacheAge the timespan a cached range value is considered valid (default 0.1 seconds, maximum 1 second)
+--- @return **minRange**, **maxRange** pair if a range estimate could be determined, **nil** otherwise. **maxRange** is **nil** if **unit** is further away than the highest possible range we can check.
 -- Includes checks for unit validity and friendly/enemy status.
 -- @usage
 -- local rc = LibStub("LibRangeCheck-3.0")
