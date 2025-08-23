@@ -194,7 +194,7 @@ end
 
 -- 统计指定单位身上中高伤害减益效果的数量
 --- @param unitName UnitToken 目标单位名称
---- @return number, number 返回两个值：中等伤害减益效果数量, 高伤害减益效果数量
+--- @return number,number [unitMidDamageDebuffCount 中等伤害减益效果数量  unitHighDamageDebuffCount 高伤害减益效果数量]
 -- 该函数会遍历目标身上的所有减益效果，并根据预定义的减益效果列表进行分类统计
 -- 如果在列表中通过名称匹配到减益效果，会打印提示信息用于调试
 Cure.Aura.countUnitDamageDebuffs = function(unitName)

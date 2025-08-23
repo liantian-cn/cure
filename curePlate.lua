@@ -46,7 +46,7 @@ Cure.Plate.anyEnemyInMelee = function()
 end
 
 -- 检查是否有敌对目标正在施放指定的法术
---- @param spell_list 法术列表，可以是法术ID或法术名称作为键的表
+--- @param spell_list table 法术列表，可以是法术ID或法术名称作为键的表
 --- @return boolean 如果有任何敌对目标正在施放spell_list中的法术则返回true，否则返回false
 Cure.Plate.anyEnemyIsCasting = function(spell_list)
     local unitID = nil
