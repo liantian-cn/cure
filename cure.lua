@@ -46,6 +46,10 @@ Cure.Item = {}
 -- 提供与职业相关的功能函数
 Cure.Class = {}
 
+-- Cure.AssisTedCombat
+-- 辅助战斗，魔兽世界官方一键辅助的功能函数
+Cure.AssistedCombat = {}
+
 local interruptList = Cure.List.InterruptSpellList;
 local interruptBlacklist = Cure.List.InterruptBlacklist;
 local manualDispelMagicDebuffList = Cure.Aura.ManualDispelMagicDebuffList;

@@ -160,7 +160,7 @@ Cure.Aura.unitDebuffExists = function(spellIdentifier, targetUnit, filter)
     return false
 end
 
--- 获取目标增益效果(Buff)剩余时间
+--- 获取目标增益效果(Buff)剩余时间
 --- @param spellIdentifier number|string 法术标识符(名称或ID)
 --- @param targetUnit UnitToken 目标单位，默认为"target"
 --- @param filter string 减益效果过滤器，默认为"HARMFUL|PLAYER"
@@ -177,7 +177,7 @@ Cure.Aura.unitBuffRemaining = function(spellIdentifier, targetUnit, filter)
     return 0
 end
 
--- 检查目标是否拥有指定的减益效果(Buff)
+--- 检查目标是否拥有指定的减益效果(Buff)
 --- @param spellIdentifier number|string 法术标识符(名称或ID)
 --- @param targetUnit UnitToken 目标单位，默认为"target"
 --- @param filter string 减益效果过滤器，默认为"HELPFUL|PLAYER"
@@ -192,11 +192,11 @@ Cure.Aura.unitBuffExists = function(spellIdentifier, targetUnit, filter)
     return false
 end
 
--- 统计指定单位身上中高伤害减益效果的数量
+--- 统计指定单位身上中高伤害减益效果的数量
 --- @param unitName UnitToken 目标单位名称
 --- @return number,number [unitMidDamageDebuffCount 中等伤害减益效果数量  unitHighDamageDebuffCount 高伤害减益效果数量]
--- 该函数会遍历目标身上的所有减益效果，并根据预定义的减益效果列表进行分类统计
--- 如果在列表中通过名称匹配到减益效果，会打印提示信息用于调试
+--- 该函数会遍历目标身上的所有减益效果，并根据预定义的减益效果列表进行分类统计
+--- 如果在列表中通过名称匹配到减益效果，会打印提示信息用于调试
 Cure.Aura.countUnitDamageDebuffs = function(unitName)
     local unitMidDamageDebuffCount, unitHighDamageDebuffCount = 0, 0;
     for i = 1, 40 do
