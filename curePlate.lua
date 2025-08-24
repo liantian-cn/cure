@@ -25,8 +25,8 @@ end
 -- 检查当前目标是否在近战范围内
 --- @return boolean 如果当前目标在近战范围内且可攻击则返回true，否则返回nil
 Cure.Plate.targetInMelee = function()
-    local targetInRange = C_Spell.IsSpellInRange(873, "target") or false
-    if UnitCanAttack("player", "target") and targetInRange and (not UnitIsDeadOrGhost("target")) then
+    local _, maxRange = LibRangeCheck:GetRange("target")
+    if UnitCanAttack("player", "target") and (maxRange <= 8) and (not UnitIsDeadOrGhost("target")) then
         return true
     end
 end
@@ -37,8 +37,8 @@ Cure.Plate.anyEnemyInMelee = function()
     local unitID, unitInRange = nil, false
     for _, plate in pairs(C_NamePlate.GetNamePlates()) do
         unitID = plate.namePlateUnitToken
-        unitInRange = C_Spell.IsSpellInRange(873, unitID) or false
-        if UnitCanAttack("player", unitID) and unitInRange and (not UnitIsDeadOrGhost(unitID)) then
+        local _, maxRange = LibRangeCheck:GetRange(unitID)
+        if UnitCanAttack("player", unitID) and (maxRange <= 8) and (not UnitIsDeadOrGhost(unitID)) then
             return true
         end
     end
