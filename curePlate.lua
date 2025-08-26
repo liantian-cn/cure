@@ -63,3 +63,26 @@ Cure.Plate.anyEnemyIsCasting = function(spell_list)
     end
     return false
 end
+
+
+-- 获取范围内可打断的敌对目标数量
+--- @param mobRange number 检查范围，默认10码
+--- @return number 返回范围内可打断的敌对目标数量
+Cure.Plate.interruptableCountInRange = function(mobRange)
+    mobRange = mobRange or 10
+    local inRange, unitID = 0, nil
+    for _, plate in pairs(C_NamePlate.GetNamePlates()) do
+        unitID = plate.namePlateUnitToken
+        local _, maxRange = LibRangeCheck:GetRange(unitID)
+        if UnitCanAttack("player", unitID) and (not UnitIsDeadOrGhost(unitID)) and (maxRange <= mobRange) then
+            local name1, _, _, _, _, _, _, notIncorruptible1, _ = UnitCastingInfo(unitID)
+            local name2, _, _, _, _, _, notIncorruptible2, _, _, _ = UnitChannelInfo(unitID)
+            if name1 and (not notIncorruptible1) then
+                inRange = inRange + 1
+            elseif name2 and (not notIncorruptible2) then
+                inRange = inRange + 1
+            end
+        end
+    end
+    return inRange
+end
