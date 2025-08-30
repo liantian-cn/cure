@@ -16,7 +16,7 @@ cureSpell.lua
 cureAura.lua
 curePlate.lua
 cureStatus.lua
-cureItem.lua
+# cureItem.lua -- 已迁移到 https://github.com/liantian-cn/RotationLib
 assisted_combat.lua
 
 class\DEMONHUNTER.lua
