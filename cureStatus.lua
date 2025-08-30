@@ -1,20 +1,6 @@
 -- 获取游戏客户端设置的法术队列窗口时间
 local SpellQueueWindow = tonumber(GetCVar("SpellQueueWindow"))
 
---- 检查玩家是否正在施法
---- @return boolean 如果正在施法则返回true，否则返回false。
-Cure.Status.playerIsCasting = function()
-    local name, _, _, _, endTimeMs, _, _, _, _, _ = UnitChannelInfo("player")
-    if name then
-        return (GetTime() * 1000 + SpellQueueWindow) < endTimeMs
-    end
-
-    name, _, _, _, endTimeMs, _, _, _, _ = UnitCastingInfo("player")
-    if name then
-        return (GetTime() * 1000 + SpellQueueWindow) < endTimeMs
-    end
-    return false
-end
 
 --- 记录进入战斗的时间点
 local entry_combat_time = nil;

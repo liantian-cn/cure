@@ -1,5 +1,5 @@
 
--- 已迁移到 https://github.com/liantian-cn/RotationLib
+-- 已迁移到 https://github.com/liantian-cn/RotationLib/tree/dev
 
 --- 获取游戏客户端设置的法术队列窗口时间
 local SpellQueueWindow = tonumber(GetCVar("SpellQueueWindow"))
